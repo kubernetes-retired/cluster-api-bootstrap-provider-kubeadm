@@ -1,0 +1,7 @@
+version: "2"
+domain: bootstrap.k8s.io
+repo: _/Users/cha/dev/cluster-api-bootstrap-provider-kubeadm
+resources:
+- group: kubeadm
+  version: v1alpha1
+  kind: KubeadmBootstrapConfig
