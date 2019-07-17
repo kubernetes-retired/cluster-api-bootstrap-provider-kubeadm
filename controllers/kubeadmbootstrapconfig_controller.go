@@ -23,10 +23,13 @@ import (
 	"github.com/go-logr/logr"
 	"github.com/pkg/errors"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	kubeadmv1alpha1 "sigs.k8s.io/cluster-api-bootstrap-provider-kubeadm/api/v1alpha1"
 	"sigs.k8s.io/cluster-api/pkg/apis/cluster/v1alpha2"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/handler"
+	"sigs.k8s.io/controller-runtime/pkg/source"
 )
 
 var (
@@ -55,6 +58,7 @@ func (r *KubeadmBootstrapConfigReconciler) Reconcile(req ctrl.Request) (ctrl.Res
 	}
 
 	// Find the owner reference
+	machineKind := v1alpha2.SchemeGroupVersion.WithKind("Machine").String()
 	var machineRef *v1.OwnerReference
 	for _, ref := range config.OwnerReferences {
 		if ref.Kind == machineKind {
@@ -100,5 +104,12 @@ func (r *KubeadmBootstrapConfigReconciler) Reconcile(req ctrl.Request) (ctrl.Res
 func (r *KubeadmBootstrapConfigReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&kubeadmv1alpha1.KubeadmBootstrapConfig{}).
+		Watches(&source.Kind{Type: &v1alpha2.Machine{}}, &handler.EnqueueRequestsFromMapFunc{
+			ToRequests: MachineToConfigMapFunc(schema.GroupVersionKind{
+				Group:   v1alpha2.SchemeGroupVersion.Group,
+				Version: v1alpha2.SchemeGroupVersion.Version,
+				Kind:    "Machine",
+			}),
+		}).
 		Complete(r)
 }
