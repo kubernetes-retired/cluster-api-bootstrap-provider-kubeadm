@@ -21,8 +21,10 @@ import (
 	. "github.com/onsi/gomega"
 
 	"golang.org/x/net/context"
+	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
+	kubeadmv1beta2 "sigs.k8s.io/cluster-api-bootstrap-provider-kubeadm/kubeadm/v1beta2"
 )
 
 // These tests are written in BDD-style using Ginkgo framework. Refer to
@@ -49,7 +51,6 @@ var _ = Describe("KubeadmBootstrapConfig", func() {
 	Context("Create API", func() {
 
 		It("should create an object successfully", func() {
-
 			key = types.NamespacedName{
 				Name:      "foo",
 				Namespace: "default",
@@ -58,6 +59,18 @@ var _ = Describe("KubeadmBootstrapConfig", func() {
 				ObjectMeta: metav1.ObjectMeta{
 					Name:      "foo",
 					Namespace: "default",
+				},
+				Spec: KubeadmBootstrapConfigSpec{
+					InitConfiguration: kubeadmv1beta2.InitConfiguration{
+						NodeRegistration: kubeadmv1beta2.NodeRegistrationOptions{
+							Taints: []v1.Taint{},
+						},
+					},
+					JoinConfiguration: kubeadmv1beta2.JoinConfiguration{
+						NodeRegistration: kubeadmv1beta2.NodeRegistrationOptions{
+							Taints: []v1.Taint{},
+						},
+					},
 				},
 				Status: KubeadmBootstrapConfigStatus{
 					Phase: Unknown,
