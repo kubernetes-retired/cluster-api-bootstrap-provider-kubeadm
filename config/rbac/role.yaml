@@ -11,21 +11,21 @@ rules:
   resources:
   - kubeadmbootstrapconfigs
   verbs:
-  - create
-  - delete
   - get
   - list
-  - patch
-  - update
   - watch
+  - create
+  - update
+  - patch
+  - delete
 - apiGroups:
   - kubeadm.bootstrap.cluster.sigs.k8s.io
   resources:
   - kubeadmbootstrapconfigs/status
   verbs:
   - get
-  - patch
   - update
+  - patch
 - apiGroups:
   - cluster.sigs.k8s.io
   resources:

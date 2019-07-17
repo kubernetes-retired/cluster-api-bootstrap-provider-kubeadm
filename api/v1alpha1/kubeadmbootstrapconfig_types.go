@@ -18,7 +18,7 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	kubeadmv1beta1 "sigs.k8s.io/cluster-api-bootstrap-provider-kubeadm/kubeadm/v1beta1"
+	kubeadmv1beta2 "sigs.k8s.io/cluster-api-bootstrap-provider-kubeadm/kubeadm/v1beta2"
 )
 
 // Phase defines KubeadmBootstrapConfig phases
@@ -35,9 +35,9 @@ const (
 
 // KubeadmBootstrapConfigSpec defines the desired state of KubeadmBootstrapConfig
 type KubeadmBootstrapConfigSpec struct {
-	ClusterConfiguration kubeadmv1beta1.ClusterConfiguration `json:"clusterConfiguration"`
-	InitConfiguration    kubeadmv1beta1.InitConfiguration    `json:"initConfiguration,omitempty"`
-	JoinConfiguration    kubeadmv1beta1.JoinConfiguration    `json:"joinConfiguration,omitempty"`
+	ClusterConfiguration kubeadmv1beta2.ClusterConfiguration `json:"clusterConfiguration"`
+	InitConfiguration    kubeadmv1beta2.InitConfiguration    `json:"initConfiguration,omitempty"`
+	JoinConfiguration    kubeadmv1beta2.JoinConfiguration    `json:"joinConfiguration,omitempty"`
 }
 
 // KubeadmBootstrapConfigStatus defines the observed state of KubeadmBootstrapConfig

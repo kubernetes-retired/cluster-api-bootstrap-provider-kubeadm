@@ -27,8 +27,6 @@ spec:
             submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
           type: string
         metadata:
-          description: ObjectMeta is metadata that all persisted resources must have,
-            which includes all objects users must create.
           properties:
             annotations:
               additionalProperties:
@@ -128,8 +126,6 @@ spec:
                     struct will be set to nil and the object is considered as initialized
                     and visible to all clients.
                   items:
-                    description: Initializer is information about an initializer that
-                      has not yet completed.
                     properties:
                       name:
                         description: name of the process that is responsible for initializing
@@ -166,9 +162,6 @@ spec:
                             with the StatusReason failure. Not all StatusReasons may
                             provide detailed causes.
                           items:
-                            description: StatusCause provides more information about
-                              an api.Status failure, including cases when multiple
-                              errors are encountered.
                             properties:
                               field:
                                 description: "The field of the resource that has caused
@@ -290,8 +283,6 @@ spec:
                 object. \n This field is alpha and can be changed or removed without
                 notice."
               items:
-                description: ManagedFieldsEntry is a workflow-id, a FieldSet and the
-                  group version of the resource that the fieldset applies to.
                 properties:
                   apiVersion:
                     description: APIVersion defines the version of this resource that
@@ -342,10 +333,6 @@ spec:
                 will point to this controller, with the controller field set to true.
                 There cannot be more than one managing controller.
               items:
-                description: OwnerReference contains enough information to let you
-                  identify an owning object. An owning object must be in the same
-                  namespace as the dependent, or be cluster-scoped, so there is no
-                  namespace field.
                 properties:
                   apiVersion:
                     description: API version of the referent.
@@ -398,11 +385,8 @@ spec:
               type: string
           type: object
         spec:
-          description: KubeadmBootstrapConfigSpec defines the desired state of KubeadmBootstrapConfig
           properties:
             clusterConfiguration:
-              description: ClusterConfiguration contains cluster-wide configuration
-                for a kubeadm cluster
               properties:
                 apiServer:
                   description: APIServer contains extra settings for the API server
@@ -426,8 +410,6 @@ spec:
                       description: ExtraVolumes is an extra set of host volumes, mounted
                         to the control plane component.
                       items:
-                        description: HostPathMount contains elements describing volumes
-                          that are mounted from the host.
                         properties:
                           hostPath:
                             description: HostPath is the path in the host that will
@@ -447,9 +429,9 @@ spec:
                             description: ReadOnly controls write access to the volume
                             type: boolean
                         required:
+                        - name
                         - hostPath
                         - mountPath
-                        - name
                         type: object
                       type: array
                     timeoutForControlPlane:
@@ -499,8 +481,6 @@ spec:
                       description: ExtraVolumes is an extra set of host volumes, mounted
                         to the control plane component.
                       items:
-                        description: HostPathMount contains elements describing volumes
-                          that are mounted from the host.
                         properties:
                           hostPath:
                             description: HostPath is the path in the host that will
@@ -520,9 +500,9 @@ spec:
                             description: ReadOnly controls write access to the volume
                             type: boolean
                         required:
+                        - name
                         - hostPath
                         - mountPath
-                        - name
                         type: object
                       type: array
                   type: object
@@ -573,9 +553,9 @@ spec:
                             communication. Required if using a TLS connection.
                           type: string
                       required:
+                      - endpoints
                       - caFile
                       - certFile
-                      - endpoints
                       - keyFile
                       type: object
                     local:
@@ -656,10 +636,6 @@ spec:
                       description: ServiceSubnet is the subnet used by k8s services.
                         Defaults to "10.96.0.0/12".
                       type: string
-                  required:
-                  - dnsDomain
-                  - podSubnet
-                  - serviceSubnet
                   type: object
                 scheduler:
                   description: Scheduler contains extra settings for the scheduler
@@ -677,8 +653,6 @@ spec:
                       description: ExtraVolumes is an extra set of host volumes, mounted
                         to the control plane component.
                       items:
-                        description: HostPathMount contains elements describing volumes
-                          that are mounted from the host.
                         properties:
                           hostPath:
                             description: HostPath is the path in the host that will
@@ -698,9 +672,9 @@ spec:
                             description: ReadOnly controls write access to the volume
                             type: boolean
                         required:
+                        - name
                         - hostPath
                         - mountPath
-                        - name
                         type: object
                       type: array
                   type: object
@@ -709,18 +683,8 @@ spec:
                     for Kubernetes components instead of their respective separate
                     images
                   type: boolean
-              required:
-              - certificatesDir
-              - controlPlaneEndpoint
-              - dns
-              - etcd
-              - imageRepository
-              - kubernetesVersion
-              - networking
               type: object
             initConfiguration:
-              description: InitConfiguration contains a list of elements that is specific
-                "kubeadm init"-only runtime information.
               properties:
                 apiVersion:
                   description: 'APIVersion defines the versioned schema of this representation
@@ -734,8 +698,6 @@ spec:
                     IS NOT uploaded to the kubeadm cluster configmap, partly because
                     of its sensitive nature
                   items:
-                    description: BootstrapToken describes one bootstrap token, stored
-                      as a Secret in the cluster
                     properties:
                       description:
                         description: Description sets a human-friendly message why
@@ -774,6 +736,11 @@ spec:
                     - token
                     type: object
                   type: array
+                certificateKey:
+                  description: CertificateKey sets the key with which certificates
+                    and keys are encrypted prior to being uploaded in a secret in
+                    the cluster during the uploadcerts init phase.
+                  type: string
                 kind:
                   description: 'Kind is a string value representing the REST resource
                     this object represents. Servers may infer this from the endpoint
@@ -801,9 +768,6 @@ spec:
                         to bind to. Defaults to 6443.
                       format: int32
                       type: integer
-                  required:
-                  - advertiseAddress
-                  - bindPort
                   type: object
                 nodeRegistration:
                   description: NodeRegistration holds fields that relate to registering
@@ -814,6 +778,12 @@ spec:
                         info. This information will be annotated to the Node API object,
                         for later re-use
                       type: string
+                    ignorePreflightErrors:
+                      description: IgnorePreflightErrors provides a slice of pre-flight
+                        errors to be ignored when the current node is registered.
+                      items:
+                        type: string
+                      type: array
                     kubeletExtraArgs:
                       additionalProperties:
                         type: string
@@ -840,8 +810,6 @@ spec:
                         field to an empty slice, i.e. `taints: {}` in the YAML file.
                         This field is solely used for Node registration.'
                       items:
-                        description: The node this Taint is attached to has the "effect"
-                          on any pod that does not tolerate the Taint.
                         properties:
                           effect:
                             description: Required. The effect of the taint on pods
@@ -862,15 +830,15 @@ spec:
                               the taint key.
                             type: string
                         required:
-                        - effect
                         - key
+                        - effect
                         type: object
                       type: array
+                  required:
+                  - taints
                   type: object
               type: object
             joinConfiguration:
-              description: JoinConfiguration contains elements describing a particular
-                node.
               properties:
                 apiVersion:
                   description: 'APIVersion defines the versioned schema of this representation
@@ -888,6 +856,12 @@ spec:
                     to be deployed on the joining node. If nil, no additional control
                     plane instance will be deployed.
                   properties:
+                    certificateKey:
+                      description: CertificateKey is the key that is used for decryption
+                        of certificates after they are downloaded from the secret
+                        upon joining a new control plane node. The corresponding encryption
+                        key is in the InitConfiguration.
+                      type: string
                     localAPIEndpoint:
                       description: LocalAPIEndpoint represents the endpoint of the
                         API server instance to be deployed on this node.
@@ -901,9 +875,6 @@ spec:
                             to bind to. Defaults to 6443.
                           format: int32
                           type: integer
-                      required:
-                      - advertiseAddress
-                      - bindPort
                       type: object
                   type: object
                 discovery:
@@ -946,7 +917,6 @@ spec:
                           type: boolean
                       required:
                       - token
-                      - unsafeSkipCAVerification
                       type: object
                     file:
                       description: File is used to specify a file or URL to a kubeconfig
@@ -971,8 +941,6 @@ spec:
                         be set** in case the KubeConfigFile does not contain any other
                         authentication information
                       type: string
-                  required:
-                  - tlsBootstrapToken
                   type: object
                 kind:
                   description: 'Kind is a string value representing the REST resource
@@ -989,6 +957,12 @@ spec:
                         info. This information will be annotated to the Node API object,
                         for later re-use
                       type: string
+                    ignorePreflightErrors:
+                      description: IgnorePreflightErrors provides a slice of pre-flight
+                        errors to be ignored when the current node is registered.
+                      items:
+                        type: string
+                      type: array
                     kubeletExtraArgs:
                       additionalProperties:
                         type: string
@@ -1015,8 +989,6 @@ spec:
                         field to an empty slice, i.e. `taints: {}` in the YAML file.
                         This field is solely used for Node registration.'
                       items:
-                        description: The node this Taint is attached to has the "effect"
-                          on any pod that does not tolerate the Taint.
                         properties:
                           effect:
                             description: Required. The effect of the taint on pods
@@ -1037,22 +1009,20 @@ spec:
                               the taint key.
                             type: string
                         required:
-                        - effect
                         - key
+                        - effect
                         type: object
                       type: array
+                  required:
+                  - taints
                   type: object
               required:
-              - caCertPath
               - discovery
-              - nodeRegistration
               type: object
           required:
           - clusterConfiguration
           type: object
         status:
-          description: KubeadmBootstrapConfigStatus defines the observed state of
-            KubeadmBootstrapConfig
           properties:
             bootstrapData:
               description: BootstrapData will be a cloud-init script for now
