@@ -17,6 +17,7 @@ RUN go mod download
 # Copy the go source
 COPY main.go main.go
 COPY api/ api/
+COPY cloudinit/ cloudinit/
 COPY controllers/ controllers/
 COPY kubeadm/ kubeadm/
 
