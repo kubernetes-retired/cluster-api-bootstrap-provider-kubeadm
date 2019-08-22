@@ -1,0 +1,22 @@
+builds:
+  - env:
+      - CGO_ENABLED=0
+      - GOPROXY=https://proxy.golang.org
+    goos:
+      - linux
+    goarch:
+      - amd64
+checksum:
+  name_template: "checksums.txt"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^Merge pull request'
+dockers:
+  - goos: linux
+    goarch: amd64
+    dockerfile: goreleaser.dockerfile
+    skip_push: true
+    image_templates:
+      - 'gcr.io/k8s-staging-capi-kubeadm/manager:latest'
