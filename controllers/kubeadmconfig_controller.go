@@ -265,6 +265,12 @@ func (r *KubeadmConfigReconciler) Reconcile(req ctrl.Request) (_ ctrl.Result, re
 		return ctrl.Result{}, nil
 	}
 
+	// Return early if the status ControlPlaneInitialized isn't ready.
+	if !cluster.Status.ControlPlaneInitialized {
+		log.Info("Control plane is not initialized, waiting until ready.")
+		return ctrl.Result{}, nil
+	}
+
 	// Every other case it's a join scenario
 	// Nb. in this case ClusterConfiguration and JoinConfiguration should not be defined by users, but in case of misconfigurations, CABPK simply ignore them
 
