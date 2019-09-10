@@ -21,7 +21,7 @@ import (
 	"testing"
 
 	infrav1 "sigs.k8s.io/cluster-api-bootstrap-provider-kubeadm/api/v1alpha2"
-	"sigs.k8s.io/cluster-api-bootstrap-provider-kubeadm/certs"
+	"sigs.k8s.io/cluster-api-bootstrap-provider-kubeadm/internal/certs"
 )
 
 func TestNewInitControlPlaneAdditionalFileEncodings(t *testing.T) {

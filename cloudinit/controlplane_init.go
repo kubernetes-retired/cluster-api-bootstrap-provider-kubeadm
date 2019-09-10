@@ -16,7 +16,7 @@ limitations under the License.
 
 package cloudinit
 
-import "sigs.k8s.io/cluster-api-bootstrap-provider-kubeadm/certs"
+import "sigs.k8s.io/cluster-api-bootstrap-provider-kubeadm/internal/certs"
 
 const (
 	controlPlaneCloudInit = `{{.Header}}

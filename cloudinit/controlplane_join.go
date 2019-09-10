@@ -18,7 +18,7 @@ package cloudinit
 
 import (
 	"github.com/pkg/errors"
-	"sigs.k8s.io/cluster-api-bootstrap-provider-kubeadm/certs"
+	"sigs.k8s.io/cluster-api-bootstrap-provider-kubeadm/internal/certs"
 )
 
 const (
