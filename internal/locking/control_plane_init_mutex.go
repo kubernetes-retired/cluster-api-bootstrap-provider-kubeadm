@@ -76,7 +76,7 @@ func (c *ControlPlaneInitMutex) Lock(ctx context.Context, cluster *clusterv1.Clu
 	}
 
 	// Adds owner reference, namespace and name
-	sema.setMetadata(cluster)
+	sema.setMetadata(cluster, machine)
 	// Adds the additional information
 	if err := sema.setInformation(&information{MachineName: machine.Name}); err != nil {
 		log.Error(err, "Failed to acquire lock while setting semaphore information")
@@ -159,16 +159,16 @@ func (s semaphore) setInformation(information *information) error {
 	return nil
 }
 
-func (s *semaphore) setMetadata(cluster *clusterv1.Cluster) {
+func (s *semaphore) setMetadata(cluster *clusterv1.Cluster, machine *clusterv1.Machine) {
 	s.ObjectMeta = metav1.ObjectMeta{
 		Namespace: cluster.Namespace,
 		Name:      configMapName(cluster.Name),
 		OwnerReferences: []metav1.OwnerReference{
 			{
-				APIVersion: cluster.APIVersion,
-				Kind:       cluster.Kind,
-				Name:       cluster.Name,
-				UID:        cluster.UID,
+				APIVersion: machine.APIVersion,
+				Kind:       machine.Kind,
+				Name:       machine.Name,
+				UID:        machine.UID,
 			},
 		},
 	}
