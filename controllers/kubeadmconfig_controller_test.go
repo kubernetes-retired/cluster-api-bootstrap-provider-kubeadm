@@ -398,7 +398,13 @@ func TestKubeadmConfigReconciler_Reconcile_GenerateCloudConfigData(t *testing.T)
 		t.Fatal("Expected status ready")
 	}
 	if cfg.Status.BootstrapData == nil {
-		t.Fatal("Expected status ready")
+		t.Fatal("Expected generated bootstrap data")
+	}
+
+	// Ensure that we don't fail trying to refresh any bootstrap tokens
+	_, err = k.Reconcile(request)
+	if err != nil {
+		t.Fatalf("Failed to reconcile:\n %+v", err)
 	}
 }
 

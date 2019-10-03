@@ -148,7 +148,7 @@ func (r *KubeadmConfigReconciler) Reconcile(req ctrl.Request) (_ ctrl.Result, re
 		err = patchHelper.Patch(ctx, config)
 		return ctrl.Result{}, err
 	// If we've already embedded a time-limited join token into a config, but are still waiting for the token to be used, refresh it
-	case config.Status.Ready:
+	case config.Status.Ready && (config.Spec.JoinConfiguration != nil && config.Spec.JoinConfiguration.Discovery.BootstrapToken != nil):
 		token := config.Spec.JoinConfiguration.Discovery.BootstrapToken.Token
 
 		// gets the remote secret interface client for the current cluster
