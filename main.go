@@ -92,6 +92,7 @@ func main() {
 		Scheme:             scheme,
 		MetricsBindAddress: metricsAddr,
 		LeaderElection:     enableLeaderElection,
+		LeaderElectionID:   "controller-leader-election-helper-cabpk",
 		Namespace:          watchNamespace,
 		SyncPeriod:         &syncPeriod,
 	})
