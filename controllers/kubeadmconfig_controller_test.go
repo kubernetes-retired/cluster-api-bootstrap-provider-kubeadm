@@ -1496,7 +1496,7 @@ func createSecrets(t *testing.T, cluster *clusterv1.Cluster, owner *bootstrapv1.
 		t.Fatal(err)
 	}
 	for _, certificate := range certificates {
-		out = append(out, certificate.AsSecret(cluster, owner))
+		out = append(out, certificate.AsSecret(cluster))
 	}
 	return out
 }

@@ -38,6 +38,7 @@ import (
 	"sigs.k8s.io/cluster-api-bootstrap-provider-kubeadm/kubeadm/v1beta1"
 	clusterv1 "sigs.k8s.io/cluster-api/api/v1alpha2"
 	"sigs.k8s.io/cluster-api/util/certs"
+	"sigs.k8s.io/cluster-api/util/patch"
 	"sigs.k8s.io/cluster-api/util/secret"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -194,6 +195,22 @@ func (c Certificates) Lookup(ctx context.Context, ctrlclient client.Client, clus
 			return err
 		}
 		certificate.KeyPair = kp
+
+		// Ensure Secret is owned by the Cluster. This provides a migration path for Secrets
+		// previously owned by KubeadmConfigs.
+		for _, ownerRef := range s.OwnerReferences {
+			if ownerRef.Kind == "KubeadmConfig" {
+				patchHelper, err := patch.NewHelper(s, ctrlclient)
+				if err != nil {
+					return err
+				}
+				s.OwnerReferences = certificate.AsSecret(cluster).OwnerReferences
+				if err := patchHelper.Patch(ctx, s); err != nil {
+					return err
+				}
+				break
+			}
+		}
 	}
 	return nil
 }
@@ -248,7 +265,7 @@ func (c Certificates) SaveGenerated(ctx context.Context, ctrlclient client.Clien
 		if !certificate.Generated {
 			continue
 		}
-		s := certificate.AsSecret(cluster, config)
+		s := certificate.AsSecret(cluster)
 		if err := ctrlclient.Create(ctx, s); err != nil {
 			return errors.WithStack(err)
 		}
@@ -304,7 +321,7 @@ func hashCert(certificate *x509.Certificate) string {
 }
 
 // AsSecret converts a single certificate into a Kubernetes secret.
-func (c *Certificate) AsSecret(cluster *clusterv1.Cluster, config *bootstrapv1.KubeadmConfig) *corev1.Secret {
+func (c *Certificate) AsSecret(cluster *clusterv1.Cluster) *corev1.Secret {
 	s := &corev1.Secret{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: cluster.Namespace,
@@ -322,10 +339,10 @@ func (c *Certificate) AsSecret(cluster *clusterv1.Cluster, config *bootstrapv1.K
 	if c.Generated {
 		s.OwnerReferences = []metav1.OwnerReference{
 			{
-				APIVersion: bootstrapv1.GroupVersion.String(),
-				Kind:       "KubeadmConfig",
-				Name:       config.Name,
-				UID:        config.UID,
+				APIVersion: clusterv1.GroupVersion.String(),
+				Kind:       "Cluster",
+				Name:       cluster.Name,
+				UID:        cluster.UID,
 			},
 		}
 	}
