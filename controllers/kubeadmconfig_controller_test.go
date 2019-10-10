@@ -42,6 +42,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 	"sigs.k8s.io/controller-runtime/pkg/handler"
+	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 	"sigs.k8s.io/controller-runtime/pkg/runtime/log"
 )
 
@@ -192,6 +193,50 @@ func TestKubeadmConfigReconciler_Reconcile_ReturnEarlyIfMachineHasBootstrapData(
 	}
 	if result.RequeueAfter != time.Duration(0) {
 		t.Fatal("did not expect to requeue after")
+	}
+}
+
+func TestKubeadmConfigReconciler_ReturnEarlyIfClusterInfraNotReady(t *testing.T) {
+	cluster := newCluster("cluster")
+	machine := newMachine(cluster, "machine")
+	config := newKubeadmConfig(machine, "cfg")
+
+	//cluster infra not ready
+	cluster.Status = clusterv1.ClusterStatus{
+		InfrastructureReady: false,
+	}
+
+	objects := []runtime.Object{
+		cluster,
+		machine,
+		config,
+	}
+	myclient := fake.NewFakeClientWithScheme(setupScheme(), objects...)
+
+	k := &KubeadmConfigReconciler{
+		Log:    log.Log,
+		Client: myclient,
+	}
+
+	request := ctrl.Request{
+		NamespacedName: types.NamespacedName{
+			Namespace: "default",
+			Name:      "cfg",
+		},
+	}
+
+	expectedResult := reconcile.Result{}
+	actualResult, actualError := k.Reconcile(request)
+
+	if actualResult.Requeue != expectedResult.Requeue {
+		t.Fatalf("TestKubeadmConfigReconciler_ReturnEarlyIfClusterInfraNotReady failed, reconcile result doesn't match, Want %v, Got %v", expectedResult, actualResult)
+	}
+	if actualResult.RequeueAfter != expectedResult.RequeueAfter {
+		t.Fatalf("TestKubeadmConfigReconciler_ReturnEarlyIfClusterInfraNotReady failed, reconcile result doesn't match, Want %v, Got %v", expectedResult, actualResult)
+	}
+
+	if actualError != nil {
+		t.Fatalf("TestKubeadmConfigReconciler_ReturnEarlyIfClusterInfraNotReady failed, error doesn't match expected value, Want nil, Got %v", actualError)
 	}
 }
 
