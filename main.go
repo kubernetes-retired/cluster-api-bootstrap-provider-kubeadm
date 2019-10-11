@@ -113,10 +113,9 @@ func main() {
 	}
 
 	if err := (&controllers.KubeadmConfigReconciler{
-		Client:               mgr.GetClient(),
-		SecretsClientFactory: controllers.ClusterSecretsClientFactory{},
-		Log:                  ctrl.Log.WithName("KubeadmConfigReconciler"),
-		KubeadmInitLock:      locking.NewControlPlaneInitMutex(ctrl.Log.WithName("init-locker"), mgr.GetClient()),
+		Client:          mgr.GetClient(),
+		Log:             ctrl.Log.WithName("KubeadmConfigReconciler"),
+		KubeadmInitLock: locking.NewControlPlaneInitMutex(ctrl.Log.WithName("init-locker"), mgr.GetClient()),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "KubeadmConfigReconciler")
 		os.Exit(1)
