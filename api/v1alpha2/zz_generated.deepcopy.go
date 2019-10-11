@@ -71,7 +71,7 @@ func (in *KubeadmConfig) DeepCopyObject() runtime.Object {
 func (in *KubeadmConfigList) DeepCopyInto(out *KubeadmConfigList) {
 	*out = *in
 	out.TypeMeta = in.TypeMeta
-	out.ListMeta = in.ListMeta
+	in.ListMeta.DeepCopyInto(&out.ListMeta)
 	if in.Items != nil {
 		in, out := &in.Items, &out.Items
 		*out = make([]KubeadmConfig, len(*in))
@@ -206,7 +206,7 @@ func (in *KubeadmConfigTemplate) DeepCopyObject() runtime.Object {
 func (in *KubeadmConfigTemplateList) DeepCopyInto(out *KubeadmConfigTemplateList) {
 	*out = *in
 	out.TypeMeta = in.TypeMeta
-	out.ListMeta = in.ListMeta
+	in.ListMeta.DeepCopyInto(&out.ListMeta)
 	if in.Items != nil {
 		in, out := &in.Items, &out.Items
 		*out = make([]KubeadmConfigTemplate, len(*in))
