@@ -1,3 +1,7 @@
+# ⚠️ Legacy repository. Current code has moved
+
+## This repository is only accepting bug fixes. All new development is being done in the [cluster-api](https://github.com/kubernetes-sigs/cluster-api/tree/master/bootstrap/kubeadm) repository.
+
 # Cluster API bootstrap provider kubeadm
 ## What is the Cluster API bootstrap provider kubeadm?
 
