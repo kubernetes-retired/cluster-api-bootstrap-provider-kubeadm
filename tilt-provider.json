@@ -1,0 +1,16 @@
+{
+  "name": "kubeadm",
+  "config": {
+    "image": "gcr.io/k8s-staging-capi-kubeadm/cluster-api-kubeadm-controller",
+    "live_reload_deps": [
+      "main.go",
+      "go.mod",
+      "go.sum",
+      "api",
+      "cloudinit",
+      "controllers",
+      "internal",
+      "kubeadm"
+    ]
+  }
+}
