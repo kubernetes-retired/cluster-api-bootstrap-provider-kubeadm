@@ -14,6 +14,7 @@ issues:
   # List of regexps of issue texts to exclude, empty list by default.
   exclude:
     - Using the variable on range scope `tc` in function literal
+    - "G108: Profiling endpoint is automatically exposed on /debug/pprof"
 run:
   deadline: 2m
   skip-dirs:

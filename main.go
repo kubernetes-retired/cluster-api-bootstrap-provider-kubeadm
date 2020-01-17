@@ -18,6 +18,8 @@ package main
 
 import (
 	"flag"
+	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"time"
 
@@ -54,6 +56,7 @@ func main() {
 		enableLeaderElection bool
 		syncPeriod           time.Duration
 		watchNamespace       string
+		profilerAddress      string
 	)
 
 	flag.StringVar(
@@ -91,9 +94,23 @@ func main() {
 		"Namespace that the controller watches to reconcile cluster-api objects. If unspecified, the controller watches for cluster-api objects across all namespaces.",
 	)
 
+	flag.StringVar(
+		&profilerAddress,
+		"profiler-address",
+		"",
+		"Bind address to expose the pprof profiler (e.g. localhost:6060)",
+	)
+
 	flag.Parse()
 
 	ctrl.SetLogger(klogr.New())
+
+	if profilerAddress != "" {
+		klog.Infof("Profiler listening for requests at %s", profilerAddress)
+		go func() {
+			klog.Info(http.ListenAndServe(profilerAddress, nil))
+		}()
+	}
 
 	if controllers.DefaultTokenTTL-syncPeriod < 1*time.Minute {
 		setupLog.Info("warning: the sync interval is close to the configured token TTL, tokens may expire temporarily before being refreshed")
