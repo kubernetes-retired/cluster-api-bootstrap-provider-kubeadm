@@ -44,7 +44,7 @@ ARCH ?= amd64
 ALL_ARCH = amd64 arm arm64 ppc64le s390x
 
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
-CRD_OPTIONS ?= "crd:trivialVersions=true"
+CRD_OPTIONS ?= "crd:trivialVersions=true, preserveUnknownFields=false"
 
 TOOLS_DIR := hack/tools
 CONTROLLER_GEN_BIN := bin/controller-gen
@@ -116,11 +116,20 @@ generate: $(CONTROLLER_GEN) ## Generate code
 
 .PHONY: generate-deepcopy
 generate-deepcopy: $(CONTROLLER_GEN) ## Generate deepcopy files
-	$(CONTROLLER_GEN) object:headerFile=./hack/boilerplate/boilerplate.generatego.txt paths=./api/...
+	$(CONTROLLER_GEN) \
+		object:headerFile=./hack/boilerplate/boilerplate.generatego.txt \
+		paths=./api/...
 
 .PHONY: generate-manifests
 generate-manifests: $(CONTROLLER_GEN) ## Generate manifests e.g. CRD, RBAC etc
-	$(CONTROLLER_GEN) $(CRD_OPTIONS) rbac:roleName=manager-role webhook paths="./..." output:crd:dir=$(CRD_ROOT) output:webhook:dir=$(WEBHOOK_ROOT) output:rbac:dir=$(RBAC_ROOT)
+	$(CONTROLLER_GEN) \
+		$(CRD_OPTIONS) \
+		rbac:roleName=manager-role \
+		webhook \
+		paths="./..." \
+		output:crd:dir=$(CRD_ROOT) \
+		output:webhook:dir=$(WEBHOOK_ROOT) \
+		output:rbac:dir=$(RBAC_ROOT)
 
 .PHONY: modules
 modules: ## Runs go mod to ensure modules are up to date.
