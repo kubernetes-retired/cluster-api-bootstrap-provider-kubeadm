@@ -803,10 +803,10 @@ func TestKubeadmConfigReconciler_Reconcile_DisocveryReconcileBehaviors(t *testin
 		KubeadmInitLock:      &myInitLocker{},
 	}
 
-	dummyCAHash := []string{"...."}
+	caHash := []string{"...."}
 	bootstrapToken := kubeadmv1beta1.Discovery{
 		BootstrapToken: &kubeadmv1beta1.BootstrapTokenDiscovery{
-			CACertHashes: dummyCAHash,
+			CACertHashes: caHash,
 		},
 	}
 	goodcluster := &clusterv1.Cluster{
@@ -880,7 +880,7 @@ func TestKubeadmConfigReconciler_Reconcile_DisocveryReconcileBehaviors(t *testin
 					JoinConfiguration: &kubeadmv1beta1.JoinConfiguration{
 						Discovery: kubeadmv1beta1.Discovery{
 							BootstrapToken: &kubeadmv1beta1.BootstrapTokenDiscovery{
-								CACertHashes:      dummyCAHash,
+								CACertHashes:      caHash,
 								APIServerEndpoint: "bar.com:6443",
 							},
 						},
@@ -903,7 +903,7 @@ func TestKubeadmConfigReconciler_Reconcile_DisocveryReconcileBehaviors(t *testin
 					JoinConfiguration: &kubeadmv1beta1.JoinConfiguration{
 						Discovery: kubeadmv1beta1.Discovery{
 							BootstrapToken: &kubeadmv1beta1.BootstrapTokenDiscovery{
-								CACertHashes: dummyCAHash,
+								CACertHashes: caHash,
 								Token:        "abcdef.0123456789abcdef",
 							},
 						},
@@ -926,7 +926,7 @@ func TestKubeadmConfigReconciler_Reconcile_DisocveryReconcileBehaviors(t *testin
 					JoinConfiguration: &kubeadmv1beta1.JoinConfiguration{
 						Discovery: kubeadmv1beta1.Discovery{
 							BootstrapToken: &kubeadmv1beta1.BootstrapTokenDiscovery{
-								CACertHashes: dummyCAHash,
+								CACertHashes: caHash,
 							},
 						},
 					},
@@ -934,8 +934,8 @@ func TestKubeadmConfigReconciler_Reconcile_DisocveryReconcileBehaviors(t *testin
 			},
 			validateDiscovery: func(c *bootstrapv1.KubeadmConfig) error {
 				d := c.Spec.JoinConfiguration.Discovery
-				if !reflect.DeepEqual(d.BootstrapToken.CACertHashes, dummyCAHash) {
-					return errors.Errorf("BootstrapToken.CACertHashes=%s expected, got %s", dummyCAHash, d.BootstrapToken.Token)
+				if !reflect.DeepEqual(d.BootstrapToken.CACertHashes, caHash) {
+					return errors.Errorf("BootstrapToken.CACertHashes=%s expected, got %s", caHash, d.BootstrapToken.Token)
 				}
 				return nil
 			},
