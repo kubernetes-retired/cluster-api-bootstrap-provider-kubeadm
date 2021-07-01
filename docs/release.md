@@ -6,7 +6,7 @@
     1. NB: `origin` should be the name of the remote pointing to
        `github.com/kubernetes-sigs/cluster-api-bootstrap-provider-kubeadm`
 1. Run `make release` to build artifacts (the image is automatically built by CI)
-1. Follow the [Image Promotion process](https://github.com/kubernetes/k8s.io/tree/master/k8s.gcr.io#image-promoter) to
+1. Follow the [Image Promotion process](https://github.com/kubernetes/k8s.io/tree/main/k8s.gcr.io#image-promoter) to
    promote the image from the staging repo to `us.gcr.io/k8s-artifacts-prod/capi-kubeadm`
 1. Create a release in GitHub based on the tag created above
     1. Attach `out/bootstrap-components.yaml` to the release
