@@ -27,12 +27,12 @@ spec:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation
             of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+            internal value, and may reject unrecognized values. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#resources'
           type: string
         kind:
           description: 'Kind is a string value representing the REST resource this
             object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+            submits requests to. Cannot be updated. In CamelCase. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
           type: string
         metadata:
           description: ObjectMeta is metadata that all persisted resources must have,
@@ -57,7 +57,7 @@ spec:
                 time when this object was created. It is not guaranteed to be set
                 in happens-before order across separate operations. Clients may not
                 set this value. It is represented in RFC3339 form and is in UTC. \n
-                Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"
+                Populated by the system. Read-only. Null for lists. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#metadata"
               format: date-time
               type: string
             deletionGracePeriodSeconds:
@@ -85,7 +85,7 @@ spec:
                 an administrator or automated process can determine the resource is
                 fully terminated. If not set, graceful deletion of the object has
                 not been requested. \n Populated by the system when a graceful deletion
-                is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"
+                is requested. Read-only. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#metadata"
               format: date-time
               type: string
             finalizers:
@@ -109,7 +109,7 @@ spec:
                 indicating a unique name could not be found in the time allotted,
                 and the client should retry (optionally after the time indicated in
                 the Retry-After header). \n Applied only if Name is not specified.
-                More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency"
+                More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#idempotency"
               type: string
             generation:
               description: A sequence number representing a specific generation of
@@ -156,7 +156,7 @@ spec:
                       description: 'APIVersion defines the versioned schema of this
                         representation of an object. Servers should convert recognized
                         schemas to the latest internal value, and may reject unrecognized
-                        values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+                        values. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#resources'
                       type: string
                     code:
                       description: Suggested HTTP return code for this status, 0 if
@@ -208,7 +208,7 @@ spec:
                         kind:
                           description: 'The kind attribute of the resource associated
                             with the status StatusReason. On some operations may differ
-                            from the requested resource Kind. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                            from the requested resource Kind. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
                           type: string
                         name:
                           description: The name attribute of the resource associated
@@ -232,14 +232,14 @@ spec:
                       description: 'Kind is a string value representing the REST resource
                         this object represents. Servers may infer this from the endpoint
                         the client submits requests to. Cannot be updated. In CamelCase.
-                        More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                        More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
                       type: string
                     message:
                       description: A human-readable description of the status of this
                         operation.
                       type: string
                     metadata:
-                      description: 'Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                      description: 'Standard list metadata. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
                       properties:
                         continue:
                           description: continue may be set if the user set a limit
@@ -260,7 +260,7 @@ spec:
                             determine when objects have changed. Value must be treated
                             as opaque by clients and passed unmodified back to the
                             server. Populated by the system. Read-only. More info:
-                            https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency'
+                            https://sigs.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency'
                           type: string
                         selfLink:
                           description: selfLink is a URL representing this object.
@@ -275,7 +275,7 @@ spec:
                       type: string
                     status:
                       description: 'Status of the operation. One of: "Success" or
-                        "Failure". More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status'
+                        "Failure". More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status'
                       type: string
                   type: object
               required:
@@ -369,7 +369,7 @@ spec:
                     description: If true, this reference points to the managing controller.
                     type: boolean
                   kind:
-                    description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                    description: 'Kind of the referent. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
                     type: string
                   name:
                     description: 'Name of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
@@ -392,7 +392,7 @@ spec:
                 must treat these values as opaque and passed unmodified back to the
                 server. They may only be valid for a particular resource or set of
                 resources. \n Populated by the system. Read-only. Value must be treated
-                as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency"
+                as opaque by clients and . More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency"
               type: string
             selfLink:
               description: SelfLink is a URL representing this object. Populated by
@@ -482,7 +482,7 @@ spec:
                 to custom resources resources are treated as templates.
               properties:
                 metadata:
-                  description: 'Standard object''s metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata'
+                  description: 'Standard object''s metadata. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#metadata'
                   properties:
                     annotations:
                       additionalProperties:
@@ -506,7 +506,7 @@ spec:
                         with Reason ServerTimeout indicating a unique name could not
                         be found in the time allotted, and the client should retry
                         (optionally after the time indicated in the Retry-After header).
-                        \n Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency"
+                        \n Applied only if Name is not specified. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#idempotency"
                       type: string
                     labels:
                       additionalProperties:
@@ -561,7 +561,7 @@ spec:
                               controller.
                             type: boolean
                           kind:
-                            description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                            description: 'Kind of the referent. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
                             type: string
                           name:
                             description: 'Name of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#names'
@@ -579,7 +579,7 @@ spec:
                   type: object
                 spec:
                   description: 'Specification of the desired behavior of the machine.
-                    More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status'
+                    More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status'
                   properties:
                     bootstrap:
                       description: Bootstrap is a reference to a local struct which
@@ -610,7 +610,7 @@ spec:
                                 field is subject to change in the future.'
                               type: string
                             kind:
-                              description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                              description: 'Kind of the referent. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
                               type: string
                             name:
                               description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
@@ -621,7 +621,7 @@ spec:
                               type: string
                             resourceVersion:
                               description: 'Specific resourceVersion to which this
-                                reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency'
+                                reference is made, if any. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency'
                               type: string
                             uid:
                               description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
@@ -655,7 +655,7 @@ spec:
                             future.'
                           type: string
                         kind:
-                          description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                          description: 'Kind of the referent. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
                           type: string
                         name:
                           description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
@@ -665,7 +665,7 @@ spec:
                           type: string
                         resourceVersion:
                           description: 'Specific resourceVersion to which this reference
-                            is made, if any. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency'
+                            is made, if any. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency'
                           type: string
                         uid:
                           description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
@@ -700,7 +700,7 @@ spec:
                             indicating a unique name could not be found in the time
                             allotted, and the client should retry (optionally after
                             the time indicated in the Retry-After header). \n Applied
-                            only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency"
+                            only if Name is not specified. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#idempotency"
                           type: string
                         labels:
                           additionalProperties:
@@ -756,7 +756,7 @@ spec:
                                   managing controller.
                                 type: boolean
                               kind:
-                                description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                                description: 'Kind of the referent. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
                                 type: string
                               name:
                                 description: 'Name of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#names'

@@ -27,12 +27,12 @@ spec:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation
             of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+            internal value, and may reject unrecognized values. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#resources'
           type: string
         kind:
           description: 'Kind is a string value representing the REST resource this
             object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+            submits requests to. Cannot be updated. In CamelCase. More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
           type: string
         metadata:
           type: object
@@ -102,7 +102,7 @@ spec:
                   description: 'APIVersion defines the versioned schema of this representation
                     of an object. Servers should convert recognized schemas to the
                     latest internal value, and may reject unrecognized values. More
-                    info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+                    info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#resources'
                   type: string
                 certificatesDir:
                   description: 'CertificatesDir specifies where to store or look for
@@ -276,7 +276,7 @@ spec:
                   description: 'Kind is a string value representing the REST resource
                     this object represents. Servers may infer this from the endpoint
                     the client submits requests to. Cannot be updated. In CamelCase.
-                    More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                    More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
                   type: string
                 kubernetesVersion:
                   description: 'KubernetesVersion is the target version of the control
@@ -398,7 +398,7 @@ spec:
                   description: 'APIVersion defines the versioned schema of this representation
                     of an object. Servers should convert recognized schemas to the
                     latest internal value, and may reject unrecognized values. More
-                    info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+                    info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#resources'
                   type: string
                 bootstrapTokens:
                   description: BootstrapTokens is respected at `kubeadm init` time
@@ -450,7 +450,7 @@ spec:
                   description: 'Kind is a string value representing the REST resource
                     this object represents. Servers may infer this from the endpoint
                     the client submits requests to. Cannot be updated. In CamelCase.
-                    More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                    More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
                   type: string
                 localAPIEndpoint:
                   description: LocalAPIEndpoint represents the endpoint of the API
@@ -548,7 +548,7 @@ spec:
                   description: 'APIVersion defines the versioned schema of this representation
                     of an object. Servers should convert recognized schemas to the
                     latest internal value, and may reject unrecognized values. More
-                    info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+                    info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#resources'
                   type: string
                 caCertPath:
                   description: 'CACertPath is the path to the SSL certificate authority
@@ -651,7 +651,7 @@ spec:
                   description: 'Kind is a string value representing the REST resource
                     this object represents. Servers may infer this from the endpoint
                     the client submits requests to. Cannot be updated. In CamelCase.
-                    More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                    More info: https://sigs.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
                   type: string
                 nodeRegistration:
                   description: NodeRegistration holds fields that relate to registering
